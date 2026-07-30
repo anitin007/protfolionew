@@ -3,19 +3,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Mail, Sparkles, FolderGit2 } from 'lucide-react';
-import GeometricCanvas from '../ui/GeometricCanvas';
+import InteractiveDotField from '../ui/InteractiveDotField';
 import MagneticButton from '../ui/MagneticButton';
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-between pt-32 pb-12 px-6 sm:px-12 max-w-7xl mx-auto overflow-hidden text-[#111111]"
+      className="relative min-h-screen flex flex-col justify-between pt-32 pb-12 px-6 sm:px-12 max-w-7xl mx-auto text-[#111111]"
     >
-      {/* Background Interactive 3D Wireframe Canvas */}
-      <div className="absolute inset-0 z-0 opacity-80">
-        <GeometricCanvas />
-      </div>
+      {/* Background Interactive Liquid Dot Field Layer */}
+      <InteractiveDotField />
 
       {/* Top Status Pill */}
       <div className="relative z-10 flex items-center justify-between">

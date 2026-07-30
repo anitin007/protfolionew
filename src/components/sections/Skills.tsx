@@ -40,7 +40,14 @@ export default function Skills() {
   ];
 
   return (
-    <section id="skills" className="py-24 px-6 sm:px-12 max-w-7xl mx-auto text-[#111111]">
+    <motion.section
+      id="skills"
+      initial={{ y: 100, opacity: 0.9 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ margin: '-80px 0px 0px 0px' }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className="relative z-20 bg-white/95 backdrop-blur-md rounded-t-[2.5rem] sm:rounded-t-[3.5rem] shadow-[0_-25px_60px_rgba(0,0,0,0.09)] border-t border-[#ECECEC] py-24 px-6 sm:px-12 max-w-7xl mx-auto text-[#111111] -mt-12"
+    >
       <SectionHeader
         number="02"
         title="TECHNICAL SKILLS"
@@ -52,10 +59,10 @@ export default function Skills() {
         {skillsData.map((category, catIdx) => (
           <motion.div
             key={category.categoryKey}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: catIdx * 0.1 }}
+            transition={{ duration: 0.5, delay: catIdx * 0.12 }}
             className="group relative rounded-3xl bg-[#FAFAFA] border border-[#ECECEC] p-6 sm:p-10 hover:bg-white hover:border-black/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
           >
             <div>
@@ -105,6 +112,6 @@ export default function Skills() {
           </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }
