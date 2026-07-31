@@ -109,32 +109,48 @@ export default function Projects() {
 
       <AnimatePresence mode="wait">
         {activeCategory === 'All' ? (
-          /* Mode 1: When "ALL" is selected, show 3 Category Hub Boxes */
+          /* Mode 1: When "ALL" is selected, show 3 Category Hub Boxes with Silky Smooth Entrance */
           <motion.div
             key="category-hubs"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
           >
             {categoryHubs.map((hub, hIdx) => (
               <motion.div
                 key={hub.name}
-                initial={{ opacity: 0, y: 25 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: hIdx * 0.1 }}
-                whileHover={{ y: -6, scale: 1.01 }}
+                initial={{ opacity: 0, y: 40, scale: 0.98 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{
+                  duration: 0.6,
+                  delay: hIdx * 0.12,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                whileHover={{
+                  y: -6,
+                  transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+                }}
                 onClick={() => setActiveCategory(hub.name)}
-                className="group relative rounded-3xl bg-[#FAFAFA] border border-[#ECECEC] p-6 sm:p-8 hover:bg-white hover:border-black/40 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden"
+                className="group relative rounded-3xl bg-[#FAFAFA] border border-[#ECECEC] p-6 sm:p-8 hover:bg-white hover:border-black/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden transform-gpu"
               >
+                {/* Sleek Dark Top Accent Bar */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Minimalist Watermark Index */}
+                <div className="absolute -bottom-4 -right-2 font-mono font-extrabold text-7xl text-black/[0.03] select-none pointer-events-none group-hover:text-black/[0.07] transition-colors duration-300">
+                  0{hIdx + 1}
+                </div>
+
                 <div>
                   {/* Category Header */}
                   <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#ECECEC]">
-                    <div className="p-3 rounded-2xl bg-white border border-[#ECECEC] text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                    <div className="p-3.5 rounded-2xl bg-white border border-[#ECECEC] text-black shadow-2xs group-hover:bg-black group-hover:text-white group-hover:-translate-y-1 transition-all duration-300">
                       {hub.icon}
                     </div>
-                    <span className="font-mono text-xs font-bold px-3 py-1 rounded-full bg-white border border-[#ECECEC] text-[#111111]">
+                    <span className="font-mono text-xs font-bold px-3 py-1.5 rounded-full bg-white border border-[#ECECEC] text-[#111111] group-hover:border-black/30 transition-colors shadow-2xs">
                       {hub.count} {hub.count === 1 ? 'PROJECT' : 'PROJECTS'}
                     </span>
                   </div>
@@ -149,16 +165,16 @@ export default function Projects() {
 
                   {/* Included Projects Preview */}
                   <div className="space-y-2 mb-6">
-                    <span className="font-mono text-[10px] font-semibold text-[#888888] uppercase tracking-wider block">
+                    <span className="font-mono text-[10px] font-bold text-[#888888] uppercase tracking-wider block">
                       FEATURED IN THIS CATEGORY:
                     </span>
                     {hub.projects.map((p) => (
                       <div
                         key={p.id}
-                        className="px-3 py-2 rounded-xl bg-white border border-[#ECECEC] text-xs font-semibold text-[#111111] truncate group-hover:border-black/20 transition-colors flex items-center justify-between"
+                        className="px-3 py-2 rounded-xl bg-white border border-[#ECECEC] text-xs font-semibold text-[#111111] truncate group-hover:border-black/20 group-hover:bg-[#FAFAFA] transition-all flex items-center justify-between shadow-2xs"
                       >
                         <span className="truncate">{p.title}</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-[#888888] group-hover:text-black shrink-0" />
+                        <ArrowUpRight className="w-3.5 h-3.5 text-[#888888] group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 shrink-0" />
                       </div>
                     ))}
                   </div>
@@ -167,7 +183,7 @@ export default function Projects() {
                 {/* Card Action Footer */}
                 <div className="pt-4 border-t border-[#ECECEC] flex items-center justify-between text-xs font-mono font-bold text-black">
                   <span>VIEW CATEGORY PROJECTS</span>
-                  <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  <span className="inline-flex items-center gap-1 group-hover:translate-x-2 transition-transform duration-300 text-black">
                     EXPLORE →
                   </span>
                 </div>
