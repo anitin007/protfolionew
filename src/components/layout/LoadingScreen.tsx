@@ -16,13 +16,13 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
           clearInterval(interval);
           setTimeout(() => {
             setIsDone(true);
-            setTimeout(onComplete, 700);
-          }, 200);
+            setTimeout(onComplete, 500);
+          }, 100);
           return 100;
         }
-        return Math.min(100, prev + Math.floor(Math.random() * 8) + 4);
+        return Math.min(100, prev + Math.floor(Math.random() * 12) + 8);
       });
-    }, 60);
+    }, 40);
     return () => clearInterval(interval);
   }, [onComplete]);
 
@@ -61,13 +61,13 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
                 return (
                   <motion.span
                     key={index}
+                    initial={{ opacity: 0, y: 14, filter: 'blur(6px)' }}
                     animate={{
-                      opacity: revealed ? 1 : 0.1,
-                      y: revealed ? 0 : 16,
-                      filter: revealed ? 'blur(0px)' : 'blur(8px)',
+                      opacity: revealed ? 1 : 0,
+                      y: revealed ? 0 : 14,
+                      filter: revealed ? 'blur(0px)' : 'blur(6px)',
                     }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-                    style={{ opacity: 0.1, filter: 'blur(8px)' }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
                     className="inline-block"
                   >
                     {char}

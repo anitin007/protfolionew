@@ -8,7 +8,7 @@ import { GraduationCap } from 'lucide-react';
 
 export default function About() {
   return (
-    <section id="about" className="relative py-20 px-6 sm:px-12 max-w-7xl mx-auto text-[#111111]">
+    <section id="about" className="relative pt-20 pb-28 sm:pb-36 px-6 sm:px-12 max-w-7xl mx-auto text-[#111111]">
 
       {/* Main Content Layer */}
       <div className="relative z-10 flex flex-col gap-6 sm:gap-8">
@@ -39,56 +39,62 @@ export default function About() {
           </p>
         </motion.div>
 
-        {/* Education Cards Grid */}
+        {/* Education Section Header */}
         <div className="pt-8 mt-4 border-t border-[#ECECEC]">
-          <div className="flex items-center gap-3 mb-6">
-            <GraduationCap className="w-5 h-5 text-black" />
-            <h3 className="text-xl font-bold text-[#111111]">Education & Training</h3>
+          <div className="flex items-center gap-2.5 mb-5">
+            <GraduationCap className="w-4 h-4 text-black" />
+            <h3 className="text-base font-bold text-[#111111] uppercase tracking-wider font-mono">
+              Education & Qualifications
+            </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Ultra Minimal Compact Education Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {EDUCATION.map((edu, idx) => (
               <motion.div
                 key={edu.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="group rounded-3xl bg-[#FAFAFA]/90 backdrop-blur-xs border border-[#ECECEC] p-6 hover:bg-white hover:border-black/30 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+                whileHover={{ y: -3 }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="group rounded-2xl bg-[#FAFAFA] border border-[#ECECEC] p-4 hover:bg-white hover:border-black/30 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-mono text-[11px] font-semibold px-3 py-1 rounded-full bg-white border border-[#ECECEC] text-[#666666]">
+                  {/* Period Badge & Location Header */}
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-[10px] font-semibold text-[#666666] uppercase tracking-wider">
                       {edu.period}
+                    </span>
+                    <span className="text-[10px] font-mono text-[#888888]">
+                      {edu.location}
                     </span>
                   </div>
 
-                  <h4 className="text-base font-bold text-[#111111] mb-1 leading-snug">
+                  {/* Course Name / Degree */}
+                  <h4 className="text-base font-bold text-black leading-snug mb-1">
                     {edu.degree}
                   </h4>
-                  <p className="text-xs font-semibold text-[#666666] mb-1">
+
+                  {/* Institution */}
+                  <p className="text-xs text-[#555555] font-medium leading-tight">
                     {edu.institution}
-                  </p>
-                  <p className="text-[11px] font-mono text-[#888888] mb-3">
-                    {edu.location}
-                  </p>
-                  <p className="text-xs text-[#666666] leading-relaxed mb-4">
-                    {edu.details}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-[#ECECEC]">
-                  <div className="flex flex-wrap gap-1">
+                {/* Minimal Tags */}
+                {edu.highlights && edu.highlights.length > 0 && (
+                  <div className="mt-3 pt-2.5 border-t border-[#ECECEC] flex flex-wrap gap-1">
                     {edu.highlights.map((item, hIdx) => (
                       <span
                         key={hIdx}
-                        className="px-2 py-0.5 rounded-md bg-white border border-[#ECECEC] text-[10px] font-mono text-[#111111]"
+                        className="px-2 py-0.5 rounded-md bg-white border border-[#ECECEC] text-[10px] font-mono text-[#444444] group-hover:border-black/20 transition-colors"
                       >
                         {item}
                       </span>
                     ))}
                   </div>
-                </div>
+                )}
               </motion.div>
             ))}
           </div>
@@ -97,3 +103,9 @@ export default function About() {
     </section>
   );
 }
+
+
+
+
+
+

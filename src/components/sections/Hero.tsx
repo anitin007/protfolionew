@@ -15,7 +15,7 @@ function FadeUp({ children, delay = 0, className = '', animate }: {
     <motion.div
       initial={{ opacity: 0, y: 22 }}
       animate={animate ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay }}
       className={className}
     >
       {children}
@@ -33,12 +33,12 @@ export default function Hero({ isLoading = false }: { isLoading?: boolean }) {
     >
       {/* Top Status Pill */}
       <div className="relative z-10 flex items-center justify-between">
-        <FadeUp animate={show} delay={0.05} className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-xs font-mono text-[#111111] shadow-xs">
+        <FadeUp animate={show} delay={0} className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-xs font-mono text-[#111111] shadow-xs">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>AVAILABLE FOR FREELANCE &amp; ROLES</span>
         </FadeUp>
 
-        <FadeUp animate={show} delay={0.1} className="hidden sm:flex items-center gap-2 text-xs font-mono text-[#666666]">
+        <FadeUp animate={show} delay={0.04} className="hidden sm:flex items-center gap-2 text-xs font-mono text-[#666666]">
           <Sparkles className="w-3.5 h-3.5 text-black" />
           <span>DEVELOPMENT &amp; GRAPHIC DESIGN</span>
         </FadeUp>
@@ -46,7 +46,7 @@ export default function Hero({ isLoading = false }: { isLoading?: boolean }) {
 
       {/* Main Hero Content */}
       <div className="relative z-10 my-auto py-12">
-        <FadeUp animate={show} delay={0.12} className="mb-4">
+        <FadeUp animate={show} delay={0.06} className="mb-4">
           <span className="text-xs sm:text-sm font-mono tracking-widest uppercase text-[#666666] block mb-2">
             HELLO, WORLD — I AM
           </span>
@@ -55,7 +55,7 @@ export default function Hero({ isLoading = false }: { isLoading?: boolean }) {
           </h1>
         </FadeUp>
 
-        <FadeUp animate={show} delay={0.2} className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <FadeUp animate={show} delay={0.1} className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#111111] mb-3">
               Software Developer &amp; Graphic Designer
@@ -79,7 +79,7 @@ export default function Hero({ isLoading = false }: { isLoading?: boolean }) {
       </div>
 
       {/* Bottom Footer Info & Scroll Indicator */}
-      <FadeUp animate={show} delay={0.28} className="relative z-10 flex items-end justify-between pt-8 border-t border-[#ECECEC] text-xs font-mono text-[#666666]">
+      <FadeUp animate={show} delay={0.13} className="relative z-10 flex items-end justify-between pt-8 border-t border-[#ECECEC] text-xs font-mono text-[#666666]">
         <div className="flex flex-col gap-0.5">
           <span className="text-[#888888]">BASED IN</span>
           <span className="text-black font-semibold">Ernakulam, Kerala, India</span>

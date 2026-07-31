@@ -37,6 +37,10 @@ export const PROJECTS: Project[] = [
     duration: '1 Month',
     githubUrl: 'https://github.com/ANITINKT',
     liveUrl: '#',
+    image: '/images/fitaura/fit.jpg',
+    galleryImages: [
+      '/images/fitaura/fit.jpg'
+    ],
     imageBg: 'from-gray-900 to-black',
     accentColor: '#111111',
     highlights: ['Mobile App', 'Firebase Backend', 'Health Tech']
@@ -58,6 +62,10 @@ export const PROJECTS: Project[] = [
     duration: '2 Weeks',
     liveUrl: 'https://auralineex.netlify.app/',
     githubUrl: 'https://github.com/ANITINKT',
+    image: '/images/Auraline Interiors/qa-desktop-visible.png',
+    galleryImages: [
+      '/images/Auraline Interiors/qa-desktop-visible.png'
+    ],
     imageBg: 'from-stone-800 to-neutral-900',
     accentColor: '#000000',
     highlights: ['Live Web App', 'GSAP ScrollTrigger', 'Canvas WebGL']
@@ -80,11 +88,18 @@ export const PROJECTS: Project[] = [
     image: '/images/sports/matchday.jpeg',
     galleryImages: [
       '/images/sports/matchday.jpeg',
+      '/images/sports/jota poster.jpg.jpeg',
+      '/images/sports/matchdayspain-1.jpg.jpeg',
       '/images/sports/finalmatch-1 (1).jpg.jpeg',
       '/images/sports/inter goal.jpg.jpeg',
       '/images/sports/champ-1.jpg.jpeg',
+      '/images/sports/WhatsApp Image 2026-07-31 at 2.53.48 PM.jpeg',
+      '/images/sports/WhatsApp Image 2026-07-31 at 2.53.49 PM.jpeg',
       '/images/sports/1223.jpeg',
-      '/images/sports/iuft.jpeg'
+      '/images/sports/iuft.jpeg',
+      '/images/sports/poste.jpeg',
+      '/images/sports/psoos.jpeg',
+      '/images/sports/ttt.jpeg'
     ],
     githubUrl: '#',
     liveUrl: '#',
@@ -107,19 +122,65 @@ export const PROJECTS: Project[] = [
     ],
     techStack: ['Adobe Photoshop', 'Figma', 'Visual Media Design'],
     duration: '2024 - 2025',
-    image: '/images/Social meida/vishu 1.1.jpg',
+    image: '/images/Social meida/WhatsApp Image 2026-03-31 at 5.34.42 PM.jpeg',
     galleryImages: [
+      '/images/Social meida/WhatsApp Image 2026-03-31 at 5.34.42 PM.jpeg',
       '/images/Social meida/vishu 1.1.jpg',
-      '/images/Social meida/earphone.jpeg',
-      '/images/Social meida/shop.jpeg',
-      '/images/Social meida/bwvew.jpeg',
-      '/images/Social meida/ghh.jpeg'
+      '/images/Social meida/onam product-3.jpg.jpeg',
+      '/images/Social meida/paper container.jpg.jpeg',
+      '/images/Social meida/tile 3.jpg.jpeg',
+      '/images/Social meida/vishu nandu-1.jpg.jpeg',
+      '/images/Social meida/easter poster1.jpg.jpeg',
+      '/images/Social meida/eid1.jpg.jpeg',
+      '/images/Social meida/mubarak.jpg.jpeg',
+      '/images/Social meida/ab muharram 2.0.jpg.jpeg',
+      '/images/Social meida/WhatsApp Image 2026-04-09 at 9.13.26 PM.jpeg'
     ],
     githubUrl: '#',
     liveUrl: '#',
     imageBg: 'from-[#1a1a1a] to-[#0d0d0d]',
     accentColor: '#111111',
-    highlights: ['Social Media Art', 'Photoshop', 'Thumbnails']
+    highlights: ['Social Media Art', 'Photoshop', 'Promotional']
+  },
+  {
+    id: 'catalogue-design-suite',
+    title: 'Product & Brand Catalogue Design',
+    category: 'Graphic Design',
+    subtitle: 'Luxury Product Brochure & Brand Showcase Catalogue',
+    description: 'Professional product catalogue, brand showcase brochures, editorial print layouts, and commercial marketing booklet designs created for retail & industrial clients.',
+    fullDescription: 'A comprehensive multi-page product catalogue design series created with Adobe Photoshop & Figma. Features high-resolution product showcase spreads, clean grid layouts, elegant typography hierarchy, price list sheets, and print-ready commercial brochure art.',
+    features: [
+      'Multi-Page Commercial Catalogue & Brochure Spreads',
+      'Product Showcase Layouts & High-Resolution Imagery',
+      'Typographic Hierarchy & Clean Grid Layout Systems',
+      'Print-Ready PDF & Social Media E-Catalogue Formats'
+    ],
+    techStack: ['Adobe Photoshop', 'Figma', 'Catalogue Design', 'Print Media'],
+    duration: '2024 - 2025',
+    image: '/images/catagoue/1.jpg',
+    galleryImages: [
+      '/images/catagoue/1.jpg',
+      '/images/catagoue/2.jpg',
+      '/images/catagoue/3.jpg',
+      '/images/catagoue/4.jpg',
+      '/images/catagoue/5.jpg',
+      '/images/catagoue/6.jpg',
+      '/images/catagoue/7.jpg',
+      '/images/catagoue/8.jpg',
+      '/images/catagoue/9.jpg',
+      '/images/catagoue/10.jpg',
+      '/images/catagoue/12.jpg',
+      '/images/catagoue/13.jpg',
+      '/images/catagoue/14.jpg',
+      '/images/catagoue/15.jpg',
+      '/images/catagoue/16.jpg',
+      '/images/catagoue/17.jpg'
+    ],
+    githubUrl: '#',
+    liveUrl: '#',
+    imageBg: 'from-[#111111] to-[#1e1e1e]',
+    accentColor: '#111111',
+    highlights: ['Catalogue Design', 'Brochures', 'Photoshop']
   }
 ];
 

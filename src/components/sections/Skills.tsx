@@ -1,117 +1,166 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import SectionHeader from '../ui/SectionHeader';
-import { Code2, Palette, CheckCircle2 } from 'lucide-react';
+import { Code2, Palette, Cpu, CheckCircle2 } from 'lucide-react';
 
 export default function Skills() {
-  const skillsData = [
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-driven expansion: Starts at scale 0.90 (small) and smoothly reaches scale 1.0 (normal)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'start center'],
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 1], [0.90, 1.0]);
+  const y = useTransform(scrollYProgress, [0, 1], [50, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.4], [0.5, 1.0]);
+
+  const skillCategories = [
     {
-      categoryKey: 'development',
-      title: 'Development',
-      icon: <Code2 className="w-5 h-5" />,
-      subgroups: [
-        {
-          groupName: 'Programming Languages',
-          items: ['Java', 'JavaScript', 'Python', 'HTML5', 'CSS3'],
-        },
-        {
-          groupName: 'Frameworks',
-          items: ['Bootstrap'],
-        },
-        {
-          groupName: 'Databases',
-          items: ['MySQL', 'Firebase'],
-        },
+      id: 'dev',
+      num: '01',
+      title: 'Software & Web Development',
+      subtitle: 'Frontend, Backend & Databases',
+      icon: <Code2 className="w-4 h-4 text-black" />,
+      skills: [
+        { name: 'Java', level: 'Core' },
+        { name: 'JavaScript (ES6+)', level: 'Advanced' },
+        { name: 'Python', level: 'Proficient' },
+        { name: 'HTML5 & CSS3', level: 'Advanced' },
+        { name: 'Bootstrap', level: 'Framework' },
+        { name: 'MySQL', level: 'Database' },
+        { name: 'Firebase', level: 'BaaS' },
+        { name: 'React.js', level: 'Learning / Building' },
+        { name: 'Node.js & Express', level: 'Learning / Building' },
+        { name: 'MongoDB', level: 'Database' },
       ],
     },
     {
-      categoryKey: 'design',
-      title: 'Design',
-      icon: <Palette className="w-5 h-5" />,
-      subgroups: [
-        {
-          groupName: 'Design & UI/UX',
-          items: ['Adobe Photoshop', 'Figma'],
-        },
+      id: 'design',
+      num: '02',
+      title: 'Visual Design & Graphics',
+      subtitle: 'UI/UX & Creative Assets',
+      icon: <Palette className="w-4 h-4 text-black" />,
+      skills: [
+        { name: 'Adobe Photoshop', level: 'Advanced' },
+        { name: 'Figma', level: 'UI/UX Design' },
+        { name: 'Social Media Graphics', level: 'Creative' },
+        { name: 'YouTube Thumbnails', level: 'Branding' },
+        { name: 'Sports & Poster Design', level: 'Visuals' },
+        { name: 'Brand Identity', level: 'Concept' },
       ],
     },
   ];
 
   return (
-    <motion.section
-      id="skills"
-      initial={{ y: 100, opacity: 0.9 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ margin: '-80px 0px 0px 0px' }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="relative z-20 bg-white/95 backdrop-blur-md rounded-t-[2.5rem] sm:rounded-t-[3.5rem] shadow-[0_-25px_60px_rgba(0,0,0,0.09)] border-t border-[#ECECEC] py-24 px-6 sm:px-12 max-w-7xl mx-auto text-[#111111] -mt-12"
-    >
-      <SectionHeader
-        number="02"
-        title="TECHNICAL SKILLS"
-        subtitle="DEVELOPMENT & DESIGN"
-      />
+    <div ref={containerRef} className="relative z-20 -mt-16 sm:-mt-24 px-4 sm:px-8 max-w-7xl mx-auto">
+      <motion.section
+        id="skills"
+        style={{
+          scale,
+          y,
+          opacity,
+        }}
+        className="relative bg-white rounded-t-[2.5rem] sm:rounded-t-[3.5rem] rounded-b-[2rem] shadow-[0_-30px_80px_rgba(0,0,0,0.12)] border border-[#ECECEC] py-16 sm:py-24 px-6 sm:px-12 text-[#111111] transform-gpu origin-top transition-shadow duration-300"
+      >
+        {/* Top Sheet Drag/Indicator Bar */}
+        <div className="w-10 h-1 rounded-full bg-[#E0E0E0] mx-auto -mt-10 sm:-mt-14 mb-10 opacity-75" />
 
-      {/* Skills Grid without filter options */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {skillsData.map((category, catIdx) => (
-          <motion.div
-            key={category.categoryKey}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: catIdx * 0.12 }}
-            className="group relative rounded-3xl bg-[#FAFAFA] border border-[#ECECEC] p-6 sm:p-10 hover:bg-white hover:border-black/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-          >
-            <div>
-              {/* Category Card Header */}
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#ECECEC]">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-white border border-[#ECECEC] text-black shadow-2xs group-hover:bg-black group-hover:text-white transition-colors">
-                    {category.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#111111] tracking-tight">
-                    {category.title}
-                  </h3>
-                </div>
-                <span className="font-mono text-xs font-semibold px-3 py-1 rounded-full bg-white border border-[#ECECEC] text-[#888888]">
-                  0{catIdx + 1}
-                </span>
-              </div>
+        <SectionHeader
+          number="02"
+          title="TECHNICAL SKILLS"
+          subtitle="DEVELOPMENT & DESIGN"
+        />
 
-              {/* Subgroups */}
-              <div className="space-y-6">
-                {category.subgroups.map((sub, sIdx) => (
-                  <div key={sIdx} className="space-y-3">
-                    <span className="font-mono text-xs font-semibold text-[#888888] uppercase tracking-wider block">
-                      {sub.groupName}
-                    </span>
-                    <div className="flex flex-wrap gap-2.5">
-                      {sub.items.map((skillName, itemIdx) => (
-                        <div
-                          key={itemIdx}
-                          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white border border-[#ECECEC] text-sm font-semibold text-[#111111] shadow-2xs hover:border-black transition-colors"
-                        >
-                          <CheckCircle2 className="w-4 h-4 text-black shrink-0" />
-                          <span>{skillName}</span>
-                        </div>
-                      ))}
+        {/* Premium Minimal Matrix Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10">
+          {skillCategories.map((cat, idx) => (
+            <motion.div
+              key={cat.id}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="group rounded-3xl bg-[#FAFAFA] border border-[#ECECEC] p-6 sm:p-8 hover:bg-white hover:border-black/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+            >
+              <div>
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#ECECEC]">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-white border border-[#ECECEC] text-black shadow-2xs group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                      {cat.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-bold text-[#111111] tracking-tight">
+                        {cat.title}
+                      </h3>
+                      <p className="text-xs text-[#666666] font-mono mt-0.5">
+                        {cat.subtitle}
+                      </p>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
+                  <span className="font-mono text-xs font-semibold px-3 py-1 rounded-full bg-white border border-[#ECECEC] text-[#888888]">
+                    {cat.num}
+                  </span>
+                </div>
 
-            {/* Bottom Card Footer */}
-            <div className="mt-8 pt-4 border-t border-[#ECECEC] flex items-center justify-between text-xs font-mono text-[#888888]">
-              <span>CORE COMPETENCY</span>
-              <span className="group-hover:text-black transition-colors">VERIFIED STACK</span>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </motion.section>
+                {/* Minimal Skill Tags Cloud */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {cat.skills.map((skill, sIdx) => (
+                    <motion.div
+                      key={sIdx}
+                      whileHover={{ scale: 1.04, y: -2 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                      className="group/tag flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-[#ECECEC] hover:border-black hover:bg-black hover:text-white transition-all duration-200 shadow-2xs cursor-default"
+                    >
+                      <span className="text-xs sm:text-sm font-medium tracking-tight text-[#111111] group-hover/tag:text-white transition-colors">
+                        {skill.name}
+                      </span>
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-[#F4F4F5] text-[#777777] group-hover/tag:bg-neutral-800 group-hover/tag:text-neutral-300 transition-colors">
+                        {skill.level}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card Footer Accent */}
+              <div className="mt-8 pt-4 border-t border-[#ECECEC] flex items-center justify-between text-[11px] font-mono text-[#888888]">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  ACTIVE TOOLSET
+                </span>
+                <span className="group-hover:text-black transition-colors font-medium">
+                  {cat.skills.length} TECHNOLOGIES
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Minimal Stack Summary Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-10 p-5 rounded-2xl bg-[#FAFAFA] border border-[#ECECEC] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#555555]"
+        >
+          <div className="flex items-center gap-2">
+            <Cpu className="w-4 h-4 text-black" />
+            <span className="font-semibold text-black">CONTINUOUS LEARNING:</span>
+            <span>Expanding MERN stack ecosystem (MongoDB, Express, React, Node)</span>
+          </div>
+          <div className="flex items-center gap-2 text-[#888888]">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Clean Code & Modern UX First</span>
+          </div>
+        </motion.div>
+      </motion.section>
+    </div>
   );
 }
+
