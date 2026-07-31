@@ -3,15 +3,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SectionHeader from '../ui/SectionHeader';
-import InteractiveDotField from '../ui/InteractiveDotField';
 import { EDUCATION } from '@/data/portfolioData';
 import { GraduationCap } from 'lucide-react';
 
 export default function About() {
   return (
     <section id="about" className="relative py-20 px-6 sm:px-12 max-w-7xl mx-auto text-[#111111]">
-      {/* Background Interactive 3D Responding Micro-Dots Layer (Edge-to-Edge Liquid Flow) */}
-      <InteractiveDotField />
 
       {/* Main Content Layer */}
       <div className="relative z-10 flex flex-col gap-6 sm:gap-8">

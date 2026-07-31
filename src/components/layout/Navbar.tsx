@@ -54,13 +54,10 @@ export default function Navbar() {
           {/* Logo */}
           <a
             href="#hero"
-            className="flex items-center gap-2 font-bold tracking-tighter text-lg md:text-xl text-[#111111] group"
+            className="font-black tracking-tighter text-lg md:text-xl text-[#111111] uppercase select-none"
             data-cursor="HOME"
           >
-            <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-mono text-xs font-semibold group-hover:scale-105 transition-transform">
-              P
-            </span>
-            <span className="tracking-tight">PORTFOLIO</span>
+            PORTFOLIO
           </a>
 
           {/* Desktop Nav Links */}

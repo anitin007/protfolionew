@@ -37,7 +37,7 @@ export default function Home() {
       {/* 3. Main Site Container */}
       <main className="relative z-10 bg-white min-h-screen">
         <Navbar />
-        <Hero />
+        <Hero isLoading={isLoading} />
         <About />
         <Skills />
         <Projects />
