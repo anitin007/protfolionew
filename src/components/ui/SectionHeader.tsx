@@ -9,6 +9,7 @@ interface SectionHeaderProps {
   subtitle?: string;
   centered?: boolean;
   titleClassName?: string;
+  dark?: boolean;
 }
 
 export default function SectionHeader({
@@ -17,6 +18,7 @@ export default function SectionHeader({
   subtitle,
   centered = false,
   titleClassName,
+  dark = false,
 }: SectionHeaderProps) {
   return (
     <div className={`mb-10 md:mb-16 ${centered ? 'text-center' : 'text-left'}`}>
@@ -25,12 +27,14 @@ export default function SectionHeader({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="inline-flex items-center gap-2 mb-3 text-xs md:text-sm font-mono tracking-widest text-[#666666] uppercase"
+        className={`inline-flex items-center gap-2 mb-3 text-xs md:text-sm font-mono tracking-widest uppercase ${
+          dark ? 'text-neutral-400' : 'text-[#666666]'
+        }`}
       >
-        <span className="text-black font-bold">[ {number} ]</span>
+        <span className={`font-bold ${dark ? 'text-white' : 'text-black'}`}>[ {number} ]</span>
         {subtitle && (
           <>
-            <span className="text-gray-300">•</span>
+            <span className={dark ? 'text-neutral-600' : 'text-gray-300'}>•</span>
             <span>{subtitle}</span>
           </>
         )}
@@ -43,7 +47,9 @@ export default function SectionHeader({
         transition={{ duration: 0.7, delay: 0.1 }}
         className={
           titleClassName ||
-          'text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#111111] leading-[1.05]'
+          `text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] ${
+            dark ? 'text-white' : 'text-[#111111]'
+          }`
         }
       >
         {title}
