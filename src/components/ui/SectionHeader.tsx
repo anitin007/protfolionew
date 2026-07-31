@@ -8,6 +8,7 @@ interface SectionHeaderProps {
   title: string;
   subtitle?: string;
   centered?: boolean;
+  titleClassName?: string;
 }
 
 export default function SectionHeader({
@@ -15,9 +16,10 @@ export default function SectionHeader({
   title,
   subtitle,
   centered = false,
+  titleClassName,
 }: SectionHeaderProps) {
   return (
-    <div className={`mb-12 md:mb-20 ${centered ? 'text-center' : 'text-left'}`}>
+    <div className={`mb-10 md:mb-16 ${centered ? 'text-center' : 'text-left'}`}>
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -39,7 +41,10 @@ export default function SectionHeader({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.1 }}
-        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#111111] leading-[1.05]"
+        className={
+          titleClassName ||
+          'text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#111111] leading-[1.05]'
+        }
       >
         {title}
       </motion.h2>

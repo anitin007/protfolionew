@@ -73,6 +73,7 @@ export default function Skills() {
           number="02"
           title="TECHNICAL SKILLS"
           subtitle="DEVELOPMENT & DESIGN"
+          titleClassName="text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-extrabold tracking-tighter uppercase leading-[0.9] text-black -mx-6 sm:-mx-12 lg:-mx-16 px-6 sm:px-12 lg:px-16 py-2 block select-none"
         />
 
         {/* Premium Minimal Matrix Grid */}
