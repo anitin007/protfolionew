@@ -107,31 +107,31 @@ export default function Projects() {
         )}
       </div>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="popLayout">
         {activeCategory === 'All' ? (
           /* Mode 1: When "ALL" is selected, show 3 Category Hub Boxes with Silky Smooth Entrance */
           <motion.div
             key="category-hubs"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
           >
             {categoryHubs.map((hub, hIdx) => (
               <motion.div
                 key={hub.name}
-                initial={{ opacity: 0, y: 40, scale: 0.98 }}
+                initial={{ opacity: 0, y: 30, scale: 0.98 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{
-                  duration: 0.6,
-                  delay: hIdx * 0.12,
+                  duration: 0.45,
+                  delay: hIdx * 0.08,
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 whileHover={{
                   y: -6,
-                  transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+                  transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] },
                 }}
                 onClick={() => setActiveCategory(hub.name)}
                 className="group relative rounded-3xl bg-[#FAFAFA] border border-[#ECECEC] p-6 sm:p-8 hover:bg-white hover:border-black/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden transform-gpu"
@@ -194,18 +194,18 @@ export default function Projects() {
           /* Mode 2: When a specific category is selected, show detailed Project Cards */
           <motion.div
             key={`category-projects-${activeCategory}`}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10"
           >
             {filteredProjects.map((project, idx) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                transition={{ duration: 0.3, delay: idx * 0.05 }}
                 onClick={() => setSelectedProject(project)}
                 className="group relative rounded-3xl bg-[#FAFAFA] border border-[#ECECEC] p-6 sm:p-8 hover:bg-white hover:border-black/40 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden"
                 data-cursor="EXPLORE"
@@ -234,6 +234,8 @@ export default function Projects() {
                         <img
                           src={project.image}
                           alt={project.title}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-50 group-hover:opacity-30 transition-opacity" />
