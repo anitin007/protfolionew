@@ -56,7 +56,7 @@ export default function Skills() {
   ];
 
   return (
-    <div ref={containerRef} className="relative z-20 -mt-16 sm:-mt-24 px-4 sm:px-8 max-w-7xl mx-auto">
+    <div ref={containerRef} className="relative z-20 -mt-16 sm:-mt-24 px-2 sm:px-4 md:px-6 w-full max-w-[95rem] mx-auto">
       <motion.section
         id="skills"
         style={{
@@ -64,7 +64,7 @@ export default function Skills() {
           y,
           opacity,
         }}
-        className="relative bg-white rounded-t-[2.5rem] sm:rounded-t-[3.5rem] rounded-b-[2rem] shadow-[0_-30px_80px_rgba(0,0,0,0.12)] border border-[#ECECEC] py-16 sm:py-24 px-6 sm:px-12 text-[#111111] transform-gpu origin-top transition-shadow duration-300"
+        className="relative bg-white rounded-t-[2.5rem] sm:rounded-t-[3.5rem] rounded-b-[2rem] shadow-[0_-30px_80px_rgba(0,0,0,0.12)] border border-[#ECECEC] py-16 sm:py-24 px-6 sm:px-12 md:px-16 lg:px-20 text-[#111111] transform-gpu origin-top transition-shadow duration-300"
       >
         {/* Top Sheet Drag/Indicator Bar */}
         <div className="w-10 h-1 rounded-full bg-[#E0E0E0] mx-auto -mt-10 sm:-mt-14 mb-10 opacity-75" />
@@ -73,7 +73,6 @@ export default function Skills() {
           number="02"
           title="TECHNICAL SKILLS"
           subtitle="DEVELOPMENT & DESIGN"
-          titleClassName="text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-extrabold tracking-tighter uppercase leading-[0.9] text-black -mx-6 sm:-mx-12 lg:-mx-16 px-6 sm:px-12 lg:px-16 py-2 block select-none"
         />
 
         {/* Premium Minimal Matrix Grid */}
