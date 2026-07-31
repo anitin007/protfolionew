@@ -18,13 +18,13 @@ export default function About() {
       {/* Main Minimalist Container */}
       <div className="space-y-8 sm:space-y-10">
 
-        {/* Hero Bio Statement Stage with Smooth Entrance */}
+        {/* Hero Bio Statement Stage with Minimal Entrance */}
         <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="p-8 sm:p-12 rounded-3xl bg-[#FAFAFA] border border-[#ECECEC] space-y-5 hover:bg-white hover:border-black/40 hover:shadow-2xl transition-all duration-500 relative overflow-hidden group transform-gpu"
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="p-8 sm:p-12 rounded-3xl bg-[#FAFAFA] border border-[#ECECEC] space-y-5 hover:bg-white hover:border-black/30 hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
         >
           {/* Top Subtle Dark Accent Bar */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -43,21 +43,21 @@ export default function About() {
           {/* Detailed Paragraph Content */}
           <div className="space-y-4 text-sm sm:text-base text-[#444444] font-medium leading-relaxed max-w-4xl pt-1">
             <p>
-              Pursuing an <strong className="text-black font-extrabold">M.Sc. in Computer Science</strong> with a <strong className="text-black font-extrabold">B.Voc. in Software Development</strong> from St. Albert's College (Autonomous), Ernakulam. I specialize in building modern full-stack web software and crafting high-impact sports & social visual media.
+              Pursuing an <strong className="text-black font-bold">M.Sc. in Computer Science</strong> after completing a <strong className="text-black font-bold">B.Voc. in Software Development</strong> from <strong className="text-black font-bold">St. Albert's College (Autonomous), Ernakulam</strong>, I specialize in <strong className="text-black font-bold">full-stack web development (MERN Stack)</strong>, building responsive and scalable web applications. I also have a strong understanding of <strong className="text-black font-bold">Artificial Intelligence (AI)</strong>, <strong className="text-black font-bold">AI-assisted development (Vibe Coding)</strong>, and <strong className="text-black font-bold">AI image generation</strong> to create modern and efficient digital solutions.
             </p>
 
             <p className="text-[#555555]">
-              My core passion lies at the intersection of clean software architecture and visual art—combining modern web frameworks (MERN Stack) with creative Adobe Photoshop design for sports artwork, matchday posters, YouTube thumbnails, and digital promotional collateral.
+              Alongside development, I am passionate about <strong className="text-black font-bold">graphic design</strong>, creating sports artwork, social media posters, YouTube thumbnails, and promotional content using <strong className="text-black font-bold">Adobe Photoshop</strong>. I enjoy combining technology, AI, and creativity to build digital experiences that are both functional and visually impactful.
             </p>
           </div>
         </motion.div>
 
-        {/* Academic Timeline Section (Untouched & Retained) */}
+        {/* Academic Timeline Section */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
           className="pt-6 border-t border-[#ECECEC] space-y-4"
         >
           <div className="flex items-center justify-between">
@@ -74,11 +74,10 @@ export default function About() {
             {EDUCATION.map((edu, idx) => (
               <motion.div
                 key={edu.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.35, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.35, delay: idx * 0.06 }}
                 className="group p-4.5 rounded-2xl bg-[#FAFAFA] border border-[#ECECEC] hover:bg-white hover:border-black/30 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
               >
                 <div className="flex items-center justify-between mb-2">
