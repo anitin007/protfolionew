@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, CheckCircle2, Maximize2, ChevronLeft, ChevronRight, Sparkles, Layers } from 'lucide-react';
+import { X, ExternalLink, CheckCircle2, Maximize2, ChevronUp, ChevronDown, Sparkles, Layers } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { Project } from '@/types';
 
@@ -19,6 +19,22 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     setActiveImageIndex(0);
   }, [project]);
 
+  const isGraphicDesign = project?.category === 'Graphic Design';
+  const gallery = project?.galleryImages || (project?.image ? [project.image] : []);
+  const currentActiveImage = gallery[activeImageIndex] || project?.image || '';
+
+  const handleNextImage = () => {
+    if (gallery.length > 0) {
+      setActiveImageIndex((prev) => (prev + 1) % gallery.length);
+    }
+  };
+
+  const handlePrevImage = () => {
+    if (gallery.length > 0) {
+      setActiveImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+    }
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -27,6 +43,18 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         } else {
           onClose();
         }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        handlePrevImage();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        handleNextImage();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handlePrevImage();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        handleNextImage();
       }
     };
 
@@ -44,23 +72,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       document.documentElement.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [project, lightboxImage, onClose]);
+  }, [project, lightboxImage, onClose, gallery.length]);
 
-  const isGraphicDesign = project?.category === 'Graphic Design';
-  const gallery = project?.galleryImages || (project?.image ? [project.image] : []);
-  const currentActiveImage = gallery[activeImageIndex] || project?.image || '';
-
-  const handleNextImage = () => {
-    if (gallery.length > 0) {
-      setActiveImageIndex((prev) => (prev + 1) % gallery.length);
-    }
-  };
-
-  const handlePrevImage = () => {
-    if (gallery.length > 0) {
-      setActiveImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
-    }
-  };
+  const verticalFeedRef = useRef<HTMLDivElement>(null);
 
   return (
     <AnimatePresence>
@@ -143,26 +157,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                       />
                     </AnimatePresence>
 
-                    {/* Left & Right Slide Controls */}
-                    {gallery.length > 1 && (
-                      <>
-                        <button
-                          onClick={handlePrevImage}
-                          className="absolute left-4 p-3 rounded-full bg-black/60 hover:bg-black text-white backdrop-blur-md border border-white/20 transition-all cursor-pointer shadow-lg hover:scale-110"
-                          title="Previous Design"
-                        >
-                          <ChevronLeft className="w-5 h-5" />
-                        </button>
-                        <button
-                          onClick={handleNextImage}
-                          className="absolute right-4 p-3 rounded-full bg-black/60 hover:bg-black text-white backdrop-blur-md border border-white/20 transition-all cursor-pointer shadow-lg hover:scale-110"
-                          title="Next Design"
-                        >
-                          <ChevronRight className="w-5 h-5" />
-                        </button>
-                      </>
-                    )}
-
                     {/* Floating Bottom Info Pill */}
                     <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-semibold flex items-center gap-3 shadow-xl">
                       <span>DESIGN {activeImageIndex + 1} / {gallery.length}</span>
@@ -183,7 +177,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between font-mono text-[11px] font-bold text-[#888888] px-1 uppercase tracking-wider">
                       <span>QUICK PREVIEW THUMBNAILS</span>
-                      <span>CLICK TO SWITCH MAIN IMAGE</span>
+                      <span>CLICK OR USE ARROWS TO SWITCH IMAGE</span>
                     </div>
                     <div className="flex items-center gap-3 overflow-x-auto pb-3 pt-1 scrollbar-thin">
                       {gallery.map((imgUrl, idx) => (
@@ -211,17 +205,41 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   </div>
                 )}
 
-                {/* 2. Full-Height Vertical Editorial Art Feed (Shows Every Image Uncropped) */}
-                <div className="space-y-6 pt-4">
+                {/* 2. Full-Height Vertical Editorial Art Feed with Sticky Up/Down Controls */}
+                <div className="space-y-6 pt-4 relative">
                   <div className="flex items-center justify-between pb-3 border-b border-[#ECECEC]">
                     <h3 className="font-mono text-xs font-extrabold text-[#111111] uppercase tracking-wider flex items-center gap-2">
                       <Layers className="w-4 h-4 text-black" />
                       <span>COMPLETE ARTWORK PORTFOLIO FEED ({gallery.length})</span>
                     </h3>
-                    <span className="font-mono text-xs text-[#888888]">FULL UNCROPPED VIEW</span>
+
+                    {/* Up Arrow & Down Arrow Scroll Control Buttons */}
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => verticalFeedRef.current?.scrollBy({ top: -450, behavior: 'smooth' })}
+                        className="px-3 py-1.5 rounded-xl bg-black text-white hover:bg-neutral-800 text-xs font-mono font-bold flex items-center gap-1.5 shadow-sm transition-all active:scale-95 cursor-pointer"
+                        title="Scroll Image Feed Up"
+                      >
+                        <ChevronUp className="w-4 h-4" />
+                        <span>UP</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => verticalFeedRef.current?.scrollBy({ top: 450, behavior: 'smooth' })}
+                        className="px-3 py-1.5 rounded-xl bg-black text-white hover:bg-neutral-800 text-xs font-mono font-bold flex items-center gap-1.5 shadow-sm transition-all active:scale-95 cursor-pointer"
+                        title="Scroll Image Feed Down"
+                      >
+                        <ChevronDown className="w-4 h-4" />
+                        <span>DOWN</span>
+                      </button>
+                    </div>
                   </div>
 
-                  <div className="space-y-8">
+                  <div
+                    ref={verticalFeedRef}
+                    className="space-y-8 max-h-[75vh] overflow-y-auto pr-2 scrollbar-thin scroll-smooth"
+                  >
                     {gallery.map((imgUrl, idx) => (
                       <motion.div
                         key={idx}
