@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, CheckCircle2, Maximize2, ChevronUp, ChevronDown, Sparkles, Layers } from 'lucide-react';
+import { X, ExternalLink, CheckCircle2, Maximize2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Play, Pause, Sparkles, Layers } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { Project } from '@/types';
 
@@ -14,9 +15,16 @@ interface ProjectModalProps {
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const [mounted, setMounted] = useState<boolean>(false);
+  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setActiveImageIndex(0);
+    setIsAutoPlaying(true);
   }, [project]);
 
   const isGraphicDesign = project?.category === 'Graphic Design';
@@ -34,6 +42,17 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       setActiveImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
     }
   };
+
+  // Automatic Image Carousel Timer (3.5 Seconds interval)
+  useEffect(() => {
+    if (!project || gallery.length <= 1 || !isAutoPlaying || lightboxImage) return;
+
+    const autoSlideTimer = setInterval(() => {
+      setActiveImageIndex((prev) => (prev + 1) % gallery.length);
+    }, 3500);
+
+    return () => clearInterval(autoSlideTimer);
+  }, [project, gallery.length, isAutoPlaying, lightboxImage]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -76,11 +95,13 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
   const verticalFeedRef = useRef<HTMLDivElement>(null);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {project && (
         <div
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 md:p-8 overflow-hidden"
+          className="fixed inset-0 z-[999999] flex items-center justify-center p-2.5 sm:p-6 md:p-8 overflow-hidden"
           onWheel={(e) => e.stopPropagation()}
           onTouchMove={(e) => e.stopPropagation()}
         >
@@ -99,17 +120,27 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 20 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 w-full max-w-5xl max-h-[92vh] overflow-y-auto bg-[#FAFAFA] border border-[#ECECEC] rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl text-[#111111] overscroll-contain"
+            className="relative z-10 w-full max-w-5xl max-h-[94vh] sm:max-h-[92vh] overflow-y-auto bg-[#FAFAFA] border border-[#ECECEC] rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl text-[#111111] overscroll-contain"
           >
-            {/* Close Button */}
-            <button
-              onClick={onClose}
-              className="absolute top-6 right-6 p-3 rounded-full bg-white border border-[#ECECEC] text-[#111111] hover:bg-black hover:text-white transition-colors cursor-pointer z-30 shadow-md"
-              aria-label="Close modal"
-              data-cursor="CLOSE"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            {/* Sticky Header with Close Button for Mobile & Desktop */}
+            <div className="sticky -top-5 sm:-top-8 md:-top-10 z-50 flex items-center justify-between bg-[#FAFAFA]/95 backdrop-blur-md pt-3 pb-3 mb-6 -mx-5 px-5 sm:-mx-8 sm:px-8 md:-mx-10 md:px-10 border-b border-[#ECECEC]">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="font-mono text-xs font-bold text-[#111111] uppercase tracking-wider">
+                  CASE STUDY & DETAILS
+                </span>
+              </div>
+
+              <button
+                onClick={onClose}
+                className="p-2 sm:p-2.5 rounded-full bg-black text-white hover:bg-neutral-800 transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5 px-3.5 sm:px-4"
+                aria-label="Close modal"
+                data-cursor="CLOSE"
+              >
+                <span className="font-mono text-xs font-bold">CLOSE</span>
+                <X className="w-4 h-4 sm:w-4 sm:h-4" />
+              </button>
+            </div>
 
             {/* Header info */}
             <div className="space-y-3 pr-12 mb-8">
@@ -142,8 +173,40 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             {isGraphicDesign ? (
               <div className="my-8 space-y-10">
                 {/* 1. Sleek Cinema Banner Slider Stage */}
-                <div className="relative rounded-3xl bg-[#0a0a0c] border border-[#222222] overflow-hidden shadow-2xl">
+                <div className="relative rounded-3xl bg-[#0a0a0c] border border-[#222222] overflow-hidden shadow-2xl group/stage">
                   <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] flex items-center justify-center p-4 sm:p-6 bg-[#09090b]">
+                    {/* Left Navigation Arrow Button */}
+                    {gallery.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePrevImage();
+                        }}
+                        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 p-2.5 sm:p-3.5 rounded-full bg-black/75 hover:bg-black text-white backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:scale-110 active:scale-95 z-30 cursor-pointer"
+                        aria-label="Previous image"
+                        title="Previous image (Left Arrow)"
+                      >
+                        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                      </button>
+                    )}
+
+                    {/* Right Navigation Arrow Button */}
+                    {gallery.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleNextImage();
+                        }}
+                        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 p-2.5 sm:p-3.5 rounded-full bg-black/75 hover:bg-black text-white backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:scale-110 active:scale-95 z-30 cursor-pointer"
+                        aria-label="Next image"
+                        title="Next image (Right Arrow)"
+                      >
+                        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                      </button>
+                    )}
+
                     <AnimatePresence mode="wait">
                       <motion.img
                         key={currentActiveImage}
@@ -157,16 +220,47 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                       />
                     </AnimatePresence>
 
-                    {/* Floating Bottom Info Pill */}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-semibold flex items-center gap-3 shadow-xl">
+                    {/* Floating Bottom Controls Pill */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 sm:px-5 py-2 rounded-full bg-black/85 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-semibold flex items-center gap-2 sm:gap-3.5 shadow-2xl z-30">
+                      {gallery.length > 1 && (
+                        <button
+                          onClick={handlePrevImage}
+                          className="p-1 rounded-md hover:bg-white/20 transition-colors text-white cursor-pointer"
+                          title="Previous Image"
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                        </button>
+                      )}
+
                       <span>DESIGN {activeImageIndex + 1} / {gallery.length}</span>
+
+                      {gallery.length > 1 && (
+                        <button
+                          onClick={() => setIsAutoPlaying((prev) => !prev)}
+                          className="p-1 rounded-md hover:bg-white/20 transition-colors text-amber-300 cursor-pointer"
+                          title={isAutoPlaying ? "Pause Auto-Slide" : "Play Auto-Slide"}
+                        >
+                          {isAutoPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                        </button>
+                      )}
+
+                      {gallery.length > 1 && (
+                        <button
+                          onClick={handleNextImage}
+                          className="p-1 rounded-md hover:bg-white/20 transition-colors text-white cursor-pointer"
+                          title="Next Image"
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                      )}
+
                       <span className="w-1 h-1 rounded-full bg-white/40" />
                       <button
                         onClick={() => setLightboxImage(currentActiveImage)}
                         className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
                       >
                         <Maximize2 className="w-3.5 h-3.5" />
-                        <span>ZOOM</span>
+                        <span className="hidden sm:inline">ZOOM</span>
                       </button>
                     </div>
                   </div>
@@ -284,14 +378,129 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </div>
               </div>
             ) : (
-              /* APP & WEB DEVELOPMENT FEATURED IMAGE BOX (Fixed clean container) */
-              project.image && (
-                <div className="relative my-6 rounded-2xl overflow-hidden border border-[#ECECEC] bg-[#111111] aspect-[16/9] flex items-center justify-center shadow-sm">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover rounded-2xl"
-                  />
+              /* APP & WEB DEVELOPMENT FEATURED IMAGE STAGE */
+              gallery.length > 0 && (
+                <div className="my-8 space-y-4">
+                  <div className="relative rounded-3xl bg-[#0a0a0c] border border-[#222222] overflow-hidden shadow-2xl group/stage">
+                    <div className="relative w-full aspect-[16/9] flex items-center justify-center p-2 sm:p-4 bg-[#09090b]">
+                      {/* Left Navigation Arrow Button */}
+                      {gallery.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePrevImage();
+                          }}
+                          className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 p-2.5 sm:p-3.5 rounded-full bg-black/75 hover:bg-black text-white backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:scale-110 active:scale-95 z-30 cursor-pointer"
+                          aria-label="Previous image"
+                          title="Previous image (Left Arrow)"
+                        >
+                          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </button>
+                      )}
+
+                      {/* Right Navigation Arrow Button */}
+                      {gallery.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleNextImage();
+                          }}
+                          className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 p-2.5 sm:p-3.5 rounded-full bg-black/75 hover:bg-black text-white backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:scale-110 active:scale-95 z-30 cursor-pointer"
+                          aria-label="Next image"
+                          title="Next image (Right Arrow)"
+                        >
+                          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </button>
+                      )}
+
+                      <AnimatePresence mode="wait">
+                        <motion.img
+                          key={currentActiveImage}
+                          src={currentActiveImage}
+                          alt={`${project.title} screenshot ${activeImageIndex + 1}`}
+                          initial={{ opacity: 0, scale: 0.98 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.98 }}
+                          transition={{ duration: 0.3 }}
+                          className="w-full h-full object-cover rounded-2xl shadow-xl cursor-zoom-in"
+                          onClick={() => setLightboxImage(currentActiveImage)}
+                        />
+                      </AnimatePresence>
+
+                      {/* Floating Bottom Controls Pill */}
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 sm:px-5 py-2 rounded-full bg-black/85 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-semibold flex items-center gap-2 sm:gap-3.5 shadow-2xl z-30">
+                        {gallery.length > 1 && (
+                          <button
+                            onClick={handlePrevImage}
+                            className="p-1 rounded-md hover:bg-white/20 transition-colors text-white cursor-pointer"
+                            title="Previous Image"
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                          </button>
+                        )}
+
+                        <span>
+                          {gallery.length > 1 ? `SCREENSHOT ${activeImageIndex + 1} / ${gallery.length}` : 'FEATURED PREVIEW'}
+                        </span>
+
+                        {gallery.length > 1 && (
+                          <button
+                            onClick={() => setIsAutoPlaying((prev) => !prev)}
+                            className="p-1 rounded-md hover:bg-white/20 transition-colors text-amber-300 cursor-pointer"
+                            title={isAutoPlaying ? "Pause Auto-Slide" : "Play Auto-Slide"}
+                          >
+                            {isAutoPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                          </button>
+                        )}
+
+                        {gallery.length > 1 && (
+                          <button
+                            onClick={handleNextImage}
+                            className="p-1 rounded-md hover:bg-white/20 transition-colors text-white cursor-pointer"
+                            title="Next Image"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                        )}
+
+                        <span className="w-1 h-1 rounded-full bg-white/40" />
+
+                        <button
+                          onClick={() => setLightboxImage(currentActiveImage)}
+                          className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
+                        >
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          <span className="hidden sm:inline">FULLSCREEN</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Thumbnail Row for App/Web Dev gallery if multiple images */}
+                  {gallery.length > 1 && (
+                    <div className="flex items-center gap-3 overflow-x-auto pb-2 pt-1 scrollbar-thin">
+                      {gallery.map((imgUrl, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setActiveImageIndex(idx)}
+                          className={`relative rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
+                            activeImageIndex === idx
+                              ? 'border-black scale-105 shadow-md ring-2 ring-black/20'
+                              : 'border-transparent opacity-60 hover:opacity-100 hover:scale-[1.02]'
+                          }`}
+                          title={`View image ${idx + 1}`}
+                        >
+                          <img
+                            src={imgUrl}
+                            alt={`Thumbnail ${idx + 1}`}
+                            className="w-20 h-14 object-cover rounded-lg bg-[#0c0c0e]"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )
             )}
@@ -410,6 +619,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </AnimatePresence>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
