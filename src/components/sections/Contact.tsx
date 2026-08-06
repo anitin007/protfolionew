@@ -139,10 +139,10 @@ export default function Contact() {
             </span>
             <div className="flex flex-wrap gap-3">
               <a
-                href={PERSONAL_INFO.github}
+                href={PERSONAL_INFO.github || 'https://github.com/anitin007'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-xs font-mono font-bold text-[#111111] hover:bg-black hover:text-white transition-colors"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-xs font-mono font-bold text-[#111111] hover:bg-black hover:text-white transition-colors cursor-pointer"
                 data-cursor="GITHUB"
               >
                 <GithubIcon className="w-4 h-4" />
@@ -151,10 +151,10 @@ export default function Contact() {
               </a>
 
               <a
-                href={PERSONAL_INFO.linkedin}
+                href={PERSONAL_INFO.linkedin || 'https://linkedin.com/in/anitin-k-t'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-xs font-mono font-bold text-[#111111] hover:bg-black hover:text-white transition-colors"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-xs font-mono font-bold text-[#111111] hover:bg-black hover:text-white transition-colors cursor-pointer"
                 data-cursor="LINKEDIN"
               >
                 <LinkedinIcon className="w-4 h-4" />
@@ -163,10 +163,10 @@ export default function Contact() {
               </a>
 
               <a
-                href={PERSONAL_INFO.instagram}
+                href={PERSONAL_INFO.instagram || 'https://instagram.com/va.li.ant'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-xs font-mono font-bold text-[#111111] hover:bg-black hover:text-white transition-colors"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-xs font-mono font-bold text-[#111111] hover:bg-black hover:text-white transition-colors cursor-pointer"
                 data-cursor="INSTAGRAM"
               >
                 <InstagramIcon className="w-4 h-4" />
