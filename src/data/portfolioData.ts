@@ -11,7 +11,7 @@ export const PERSONAL_INFO = {
   email: 'anitinktofficial@gmail.com',
   secondaryEmail: 'anitinthomas2003@gmail.com',
   phone: '+91 95676 33243',
-  github: 'https://github.com/ANITINKT',
+  github: 'https://github.com/anitin007',
   linkedin: 'https://linkedin.com/in/anitin-k-t',
   instagram: 'https://instagram.com/va.li.ant',
   resumeUrl: '/resume.pdf',
@@ -35,7 +35,7 @@ export const PROJECTS: Project[] = [
     ],
     techStack: ['Flutter', 'Dart', 'Firebase Auth', 'Cloud Firestore', 'Provider'],
     duration: '1 Month',
-    githubUrl: 'https://github.com/ANITINKT',
+    githubUrl: 'https://github.com/anitin007',
     liveUrl: '#',
     image: '/images/fitaura/fit.jpg',
     galleryImages: [
@@ -61,7 +61,7 @@ export const PROJECTS: Project[] = [
     techStack: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'GSAP ScrollTrigger', 'Lenis Scroll'],
     duration: '2 Weeks',
     liveUrl: 'https://auralineex.netlify.app/',
-    githubUrl: 'https://github.com/ANITINKT',
+    githubUrl: 'https://github.com/anitin007',
     image: '/images/Auraline Interiors/qa-desktop-visible.png',
     galleryImages: [
       '/images/Auraline Interiors/qa-desktop-visible.png'

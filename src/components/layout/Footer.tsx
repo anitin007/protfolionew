@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
+import { PERSONAL_INFO } from '@/data/portfolioData';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '../ui/Icons';
 
 export default function Footer() {
   const [timeString, setTimeString] = useState('');
@@ -39,10 +41,48 @@ export default function Footer() {
           <span>© 2026</span>
         </div>
 
-        {/* Center: Live Time */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-[#111111]">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>ERNAKULAM, IN — {timeString || 'IST'}</span>
+        {/* Center: Live Time & Social Icons */}
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-[#111111]">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>ERNAKULAM, IN — {timeString || 'IST'}</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <a
+              href={PERSONAL_INFO.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-[#111111] hover:bg-black hover:text-white transition-colors"
+              title="GitHub Profile"
+              aria-label="GitHub Profile"
+              data-cursor="GITHUB"
+            >
+              <GithubIcon className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href={PERSONAL_INFO.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-[#111111] hover:bg-black hover:text-white transition-colors"
+              title="LinkedIn Profile"
+              aria-label="LinkedIn Profile"
+              data-cursor="LINKEDIN"
+            >
+              <LinkedinIcon className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href={PERSONAL_INFO.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full bg-[#FAFAFA] border border-[#ECECEC] text-[#111111] hover:bg-black hover:text-white transition-colors"
+              title="Instagram Profile"
+              aria-label="Instagram Profile"
+              data-cursor="INSTAGRAM"
+            >
+              <InstagramIcon className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
 
         {/* Right: Back to top button */}
